@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .menu-item {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px;
+            width: 250px;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .menu-item h3 {
+            margin: 0;
+        }
+        .menu-item p {
+            margin: 10px 0;
+        }
+        .menu-item button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .menu-item button:hover {
+            background-color: #218838;
+        }
+        .booking-form {
+            background-color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .booking-form input, .booking-form select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .booking-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .booking-form button:hover {
+            background-color: #0056b3;
+        }
+        .total-price {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to Our Restaurant</h1>
+    <p>Your favorite place to eat!</p>
+</header>
+
+<div class="menu">
+    <div class="menu-item">
+        <h3>Pasta</h3>
+        <p>$12.99</p>
+        <button onclick="addToCart('Pasta', 12.99)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3>Burger</h3>
+        <p>$9.99</p>
+        <button onclick="addToCart('Burger', 9.99)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3>Pizza</h3>
+        <p>$15.99</p>
+        <button onclick="addToCart('Pizza', 15.99)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3>Salad</h3>
+        <p>$7.99</p>
+        <button onclick="addToCart('Salad', 7.99)">Add to Cart</button>
+    </div>
+</div>
+
+<div class="booking-form">
+    <h2>Book a Table</h2>
+    <form id="bookingForm" onsubmit="bookTable(event)">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="number" id="guests" placeholder="Number of Guests" required min="1">
+        <input type="datetime-local" id="bookingTime" required>
+        <button type="submit">Book Now</button>
+    </form>
+</div>
+
+<div class="total-price">
+    <p>Selected Items: <span id="selectedItems"></span></p>
+    <p>Total Price: $<span id="totalPrice">0.00</span></p>
+</div>
+
+<script>
+    let cart = [];
+    let totalPrice = 0;
+
+    function addToCart(itemName, itemPrice) {
+        cart.push({ name: itemName, price: itemPrice });
+        totalPrice += itemPrice;
+        updateCart();
+    }
+
+    function updateCart() {
+        let selectedItemsText = cart.map(item => item.name).join(', ');
+        document.getElementById('selectedItems').textContent = selectedItemsText;
+        document.getElementById('totalPrice').textContent = totalPrice.toFixed(2);
+    }
+
+    function bookTable(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const guests = document.getElementById('guests').value;
+        const bookingTime = document.getElementById('bookingTime').value;
+
+        alert(`Table booked for ${name} with ${guests} guests at ${bookingTime}!`);
+        document.getElementById('bookingForm').reset();
+    }
+</script>
+
+</body>
+</html>
